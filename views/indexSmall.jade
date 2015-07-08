@@ -1,0 +1,148 @@
+doctype html
+// if IE 8html.ie8(lang='en')
+// if IE 9html.ie9(lang='en')
+//if !IE
+  | [if !IE]
+html(lang='en')
+  //
+    [endif]
+  head
+    title Free Bootstrap Theme for Developers
+    // Meta
+    meta(charset='utf-8')
+    |             
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    |                 
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    |                     
+    meta(name='description', content='')
+    |                         
+    meta(name='author', content='')
+    |                             
+    link(rel='shortcut icon', href='favicon.ico')
+    |                                 
+    link(href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic', rel='stylesheet', type='text/css')
+    |                                     
+    link(href='http://fonts.googleapis.com/css?family=Montserrat:400,700', rel='stylesheet', type='text/css')
+    // Global CSS
+    link(rel='stylesheet', href='assets/plugins/bootstrap/css/bootstrap.min.css')
+    // Plugins CSS
+    link(rel='stylesheet', href='assets/plugins/font-awesome/css/font-awesome.css')
+    |                                                 
+    link(rel='stylesheet', href='assets/plugins/prism/prism.css')
+    // Theme CSS
+    link#theme-style(rel='stylesheet', href='assets/css/styles.css')
+    // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
+    //
+      if lt IE 9script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      |
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+  |                                                     
+  body(data-spy='scroll')
+    // -//Facebook button code
+    #fb-root
+    |                                                         
+    script.
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    // ******HEADER******
+    header#header.header
+      .container
+        h1.logo.pull-left
+          a.scrollto(href='#promo')
+            span.logo-title // add top title here
+        // //logo
+        nav#main-nav.main-nav.navbar-right(role='navigation')
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-collapse')
+              span.sr-only Toggle navigation
+              |                                                                             
+              span.icon-bar
+              |                                                                             
+              span.icon-bar
+              |                                                                             
+              span.icon-bar
+            // //nav-toggle
+          // //navbar-header
+          #navbar-collapse.navbar-collapse.collapse
+            ul.nav.navbar-nav
+              li.active.nav-item.sr-only
+                a.scrollto(href='#promo') Home
+              |                                                                             
+              li.nav-item
+                a.scrollto(href='#about') About
+              |                                                                             
+              li.nav-item
+                a.scrollto(href='#features') Features
+              |                                                                             
+              li.nav-item
+                a.scrollto(href='#docs') Docs
+              |                                                                             
+              li.nav-item
+                a.scrollto(href='#license') License
+              |                                                                             
+              li.nav-item.last
+                a.scrollto(href='#contact') Contact
+            // //nav
+          // //navabr-collapse
+        // //main-nav
+    // //header
+    // ******PROMO******
+    section#promo.promo.section.offset-header
+      .container.text-center
+        h2.title
+          | Protein / 
+          span.highlight Calorie
+        |                                                                 
+        p.intro= intro
+          
+        |                                                                 
+        .btns
+          a.btn.btn-cta-secondary(href='http://themes.3rdwavemedia.com/', target='_blank') Demo
+          |                                                                     
+          a.btn.btn-cta-primary(href='http://themes.3rdwavemedia.com/website-templates/devaid-free-bootstrap-theme-developers/', target='_blank') Download
+        |                                                                 
+        ul.meta.list-inline
+          li
+            a(href='#', target='_blank') View on GitHub
+          |                                                                     
+          li
+            a(href='https://github.com/twbs/bootstrap', target='_blank') Full Documentation
+          |                                                                     
+          li
+            | Created by: 
+            a(href='http://themes.3rdwavemedia.com/', target='_blank') Xiaoying Riley
+            |  at 3rd Wave Media
+        // //meta
+      // //container
+      .social-media
+        .social-media-inner.container.text-center
+          ul.list-inline
+            li.twitter-follow
+              a.twitter-follow-button(href='https://twitter.com/3rdwave_themes', data-show-count='false') Follow @3rdwave_themes
+              |                                                                             
+              script.
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+            // //twitter-follow
+            li.twitter-tweet
+              a.twitter-share-button(href='https://twitter.com/share', data-via='3rdwave_themes', data-hashtags='bootstrap') Tweet
+              |                                                                             
+              script.
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+            // //twitter-tweet
+            li.facebook-like
+              .fb-like(data-href='http://themes.3rdwavemedia.com/', data-layout='button_count', data-action='like', data-show-faces='false', data-share='true')
+            // //facebook-like
+            // // Generate github buttons: https://github.com/mdo/github-buttons
+            li.github-star
+              iframe(src='http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=watch&count=true', allowtransparency='true', frameborder='0', scrolling='0', width='110', height='20')
+            |                                                                         
+            li.github-fork
+              iframe(src='http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=fork', allowtransparency='true', frameborder='0', scrolling='0', width='53', height='20')
+
+    script(src='javascripts/search.js')
