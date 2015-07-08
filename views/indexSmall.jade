@@ -100,13 +100,13 @@ html(lang='en')
           span.highlight Calorie
         |                                                                 
         p.intro= intro
-          
-        |                                                                 
-        .btns
-          a.btn.btn-cta-secondary(href='http://themes.3rdwavemedia.com/', target='_blank') Demo
-          |                                                                     
-          a.btn.btn-cta-primary(href='http://themes.3rdwavemedia.com/website-templates/devaid-free-bootstrap-theme-developers/', target='_blank') Download
-        |                                                                 
+                                                         br
+        p
+          form(name="searchbar", class= "container", method="get")
+            span
+              input(type="text", class="search rounded", placeholder="Search...")
+
+        |                                                
         ul.meta.list-inline
           li
             a(href='#', target='_blank') View on GitHub
