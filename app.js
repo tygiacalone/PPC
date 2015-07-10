@@ -1,16 +1,43 @@
 var express = require('express');
+
+var _ = require('lodash');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var nutritionix = require('nutritionix');
 
+// Set up nutritionix API
+var NutritionixClient = require('nutritionix');
+var nutritionix = new NutritionixClient({
+  appId: 'dadd6670',
+  appKey: 'e2e2b0dfbeeebfe033dc7cf07b1d0dca'
+});
+
+// Routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+console.log('Listening on port 3000! \n');
 
+app.set('port', process.env.PORT || 3700);
+
+// Set up socket.io
+var io = require('socket.io').listen(app.listen(app.get('port')));
+
+io.sockets.on('connection', function (socket) {
+  console.log('Connection established to socket.io\n');
+  socket.on('query', function (data) {
+    io.sockets.emit('results', data);
+  });
+});
+
+  console.log('Connection established to socket.io\n');
+  io.sockets.on('query', function (data) {
+    console.log(data);
+    io.sockets.emit('results', data);
+  });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -57,5 +84,32 @@ app.use(function(err, req, res, next) {
   });
 });
 
+function autoSuccess(autoResults){
+    var q = autoResults[0].text;
+    query = autoResults;
+    console.log('autocomplete successfull searching items using: %s'.green, q);
+    io.sockets.emit('query',query);
+    return query; 
+}
+
+function RequestErrorHandler(msg) {
+    return function reqErrHndlr(e) {
+        console.error(msg.red);
+
+        if (_.isObject(e) && !(e instanceof Error)) {
+            logJson(e);
+        } else {
+            console.error(e);
+        }
+
+        process.exit(1);
+
+    };
+}
+
+
+query = nutritionix.autocomplete({ q: 'ham' }).then(autoSuccess);
+
+console.log(query);
 
 module.exports = app;
