@@ -7,18 +7,19 @@
   },
   "dependencies": {
     "body-parser": "~1.12.4",
+    "bootstrap": "latest",
+    "browserify": "^10.2.6",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
     "express": "~4.12.4",
     "jade": "~1.9.2",
-    "morgan": "~1.5.3",
-    "serve-favicon": "~2.2.1",
-    "bootstrap": "latest",
-    "nutritionix": "latest",
+    "lodash": "latest",
     "mongodb": "latest",
     "monk": "latest",
-    "underscore": "latest",
-    "lodash": "latest",
-    "socket.io": "latest"
+    "morgan": "~1.5.3",
+    "nutritionix": "latest",
+    "serve-favicon": "~2.2.1",
+    "socket.io": "latest",
+    "underscore": "latest"
   }
 }

@@ -26,12 +26,32 @@ app.set('port', process.env.PORT || 3700);
 // Set up socket.io
 var io = require('socket.io').listen(app.listen(app.get('port')));
 
+io.sockets.on('query', function (data){
+              console.log('Just received query: ');
+  console.log(data);
+             });
+
 io.sockets.on('connection', function (socket) {
-  console.log('Connection established to socket.io\n');
+  console.log('Connection established to socket.io\n')
+
   socket.on('query', function (data) {
     io.sockets.emit('results', data);
   });
+
+//    socket.emit('results', 'testing results');
+
+
+    socket.on('test', function (data) {
+        console.log('test received from frontend\n');
+        console.log(data);
+
+        nutritionix.autocomplete(data).then(sendResults, RequestErrorHandler);
+//        io.sockets.emit('results', 'hello');
+    });
+
 });
+
+
 
   console.log('Connection established to socket.io\n');
   io.sockets.on('query', function (data) {
@@ -84,12 +104,24 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var query = {};
+var q;
+var window = this;
+
 function autoSuccess(autoResults){
-    var q = autoResults[0].text;
+    q = autoResults[0].text;
     query = autoResults;
-    console.log('autocomplete successfull searching items using: %s'.green, q);
-    io.sockets.emit('query',query);
+    console.log('autocomplete successful searching items using: %s'.green, q);
+    save(autoResults);
+    
     return query; 
+}
+
+function sendResults(results) {
+    console.log(results);
+    console.log('emitting query results\n');
+    io.sockets.emit('results', results);
+    return results;
 }
 
 function RequestErrorHandler(msg) {
@@ -107,9 +139,28 @@ function RequestErrorHandler(msg) {
     };
 }
 
+function printLater(){
+  setTimeout(function () {
+    console.log(query);
+    io.sockets.emit('query', query);
+    console.log('I have emitted in printLater');
+  }, 3000);
+}
 
-query = nutritionix.autocomplete({ q: 'ham' }).then(autoSuccess);
+function save(result) {
+  query = result;
+  console.log('inside save\n');
+  console.log(query);
+  io.sockets.emit('query', query);
+  console.log('emit the value: ');
+  console.log(query);
+}
 
-console.log(query);
+nutritionix.autocomplete({ q: 'ham' }).then(sendResults, RequestErrorHandler);
+
+printLater();
+
+//console.log('Logging query: ' + query);
+//console.log('Logging q: ' + q);
 
 module.exports = app;
