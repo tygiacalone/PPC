@@ -74,6 +74,12 @@ input[type=text]{
   text-transform: uppercase;
 }
 
+#item {
+  background: black;
+  styl
+
+}
+
 .btn,
 a.btn {
   -webkit-transition: all 0.4s ease-in-out;
