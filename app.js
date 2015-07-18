@@ -49,6 +49,20 @@ io.sockets.on('connection', function (socket) {
 //        io.sockets.emit('results', 'hello');
     });
 
+    socket.on('search', function (searchTerm) {
+        console.log('search received from frontend\n');
+        console.log(searchTerm);
+
+        nutritionix.natural({
+            q: searchTerm,
+            // use these for paging
+            limit: 10,
+            offset: 0,
+            // controls the basic nutrient returned in search
+            search_nutrient: 'calories'
+        }).then(sendSearchResults, RequestErrorHandler);
+    });
+
 });
 
 
@@ -113,14 +127,37 @@ function autoSuccess(autoResults){
     query = autoResults;
     console.log('autocomplete successful searching items using: %s'.green, q);
     save(autoResults);
-    
-    return query; 
+
+    return query;
 }
 
 function sendResults(results) {
     console.log(results);
     console.log('emitting query results\n');
     io.sockets.emit('results', results);
+    return results;
+}
+
+function sendSearchResults(nRes) {
+    console.log(nRes);
+    console.log('emitting search results\n');
+    io.sockets.emit('searchResults', nRes);
+
+    console.log('executed natural search: %d hits'.green, nRes.results.length);
+
+    _.forEach(nRes.results, function(r){
+
+        var query = r.parsed_query.query;
+        var calories = _.find(r.nutrients, {attr_id: 208}) || {
+                attr_id: null,
+                value: null,
+                unit: null,
+                usda_tag: null
+            };
+
+        console.log(' - %s calories=%d'.green, query, calories.value);
+    });
+
     return results;
 }
 
