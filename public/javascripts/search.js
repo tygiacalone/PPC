@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:3700');
+var socket = io.connect('http://172.91.76.57:3700');
 
 window.onload = function() {
 

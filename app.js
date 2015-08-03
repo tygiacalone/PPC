@@ -26,7 +26,7 @@ console.log('Listening on port 3000! \n');
 //app.set('port', process.env.PORT || 3700);
 
 // Set up socket.io
-var io = require('socket.io').listen(app.listen(app.get('port')));
+var io = require('socket.io').listen(3700);
 
 io.sockets.on('query', function (data){
     console.log('Just received query: ');
