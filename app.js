@@ -6,6 +6,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var request = require('request');
+var requestify = require('requestify');
 
 // Set up nutritionix API
 var NutritionixClient = require('nutritionix');
@@ -27,32 +29,70 @@ app.set('port', process.env.PORT || 3700);
 var io = require('socket.io').listen(app.listen(app.get('port')));
 
 io.sockets.on('query', function (data){
-              console.log('Just received query: ');
-  console.log(data);
-             });
+    console.log('Just received query: ');
+    console.log(data);
+});
 
 io.sockets.on('connection', function (socket) {
-  console.log('Connection established to socket.io\n')
+  console.log('Connection established to socket.io\n');
 
-  socket.on('query', function (data) {
-    io.sockets.emit('results', data);
-  });
-
-//    socket.emit('results', 'testing results');
-
-
-    socket.on('test', function (data) {
-        console.log('test received from frontend\n');
-        console.log(data);
+    // Getting autocomplete suggestion list from Nutritionix API
+    socket.on('suggestion', function (data) {
+        console.log('suggestion received from frontend\n');
+        console.log('Suggestion: ' + data);
 
         nutritionix.autocomplete(data).then(sendResults, RequestErrorHandler);
-//        io.sockets.emit('results', 'hello');
     });
 
+    // Fetching food information from Nutritionix API
     socket.on('search', function (searchTerm) {
         console.log('search received from frontend\n');
-        console.log(searchTerm);
+        console.log('searchTerm is: ' + searchTerm + '\n');
+/*
+        var response = request.post('https://api.nutritionix.com/v1_1/search/').form({
+            "appId":"dadd6670",
+            "appKey":"e2e2b0dfbeeebfe033dc7cf07b1d0dca",
+            "query": searchTerm
+        });
+*/
+        requestify.request('https://api.nutritionix.com/v1_1/search/', {
+            method: 'POST',
+            body: {
+                "appId":"dadd6670",
+                "appKey":"e2e2b0dfbeeebfe033dc7cf07b1d0dca",
+                "query": searchTerm,
+                "fields": [
+                    "item_name",
+                    "brand_name",
+                    "upc",
+                    "nf_calories"
+                ]
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            dataType: 'json'
+        }).then( function(response) {
+            //response.getBody();
+            //socket.emit('suggestion', response.getBody());
+            var hits = response.getBody().hits;
 
+            console.log(hits[0]);
+            console.log(hits[0].fields.brand_name);
+            socket.emit('testings', hits[0].fields );
+            console.log('response sent to frontend');
+        });
+
+        /*
+        requestify.get('https://api.nutritionix.com/v1_1/search/')
+            .then(function(response) {
+                // Get the response body (JSON parsed or jQuery object for XMLs)
+                response.getBody();
+            }
+        );*/
+
+        console.log('emitted request');
+        /*
         nutritionix.natural({
             q: searchTerm,
             // use these for paging
@@ -61,17 +101,12 @@ io.sockets.on('connection', function (socket) {
             // controls the basic nutrient returned in search
             search_nutrient: 'calories'
         }).then(sendSearchResults, RequestErrorHandler);
+        */
     });
 
 });
 
 
-
-  console.log('Connection established to socket.io\n');
-  io.sockets.on('query', function (data) {
-    console.log(data);
-    io.sockets.emit('results', data);
-  });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -133,7 +168,7 @@ function autoSuccess(autoResults){
 
 function sendResults(results) {
     console.log(results);
-    console.log('emitting query results\n');
+    console.log('emitting autocomplete results\n');
     io.sockets.emit('results', results);
     return results;
 }
@@ -162,6 +197,8 @@ function sendSearchResults(nRes) {
 }
 
 function RequestErrorHandler(msg) {
+    console.log('Request Error Handler!\n');
+    console.log(msg);
     return function reqErrHndlr(e) {
         console.error(msg.red);
 
@@ -192,10 +229,6 @@ function save(result) {
   console.log('emit the value: ');
   console.log(query);
 }
-
-nutritionix.autocomplete({ q: 'ham' }).then(sendResults, RequestErrorHandler);
-
-printLater();
 
 //console.log('Logging query: ' + query);
 //console.log('Logging q: ' + q);

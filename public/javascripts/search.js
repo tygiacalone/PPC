@@ -28,9 +28,19 @@ window.onload = function() {
             lookup: resultList,
             onSelect: function (suggestion) {
                 console.log(resultList);
-                var thehtml = '<strong>Item Name:</strong> ' + suggestion.value;// + ' <br> <strong>Symbol:</strong> ' + suggestion.data;
-                $('#outputcontent').html(thehtml);
                 socket.emit('search', suggestion.value);
+
+                socket.on('testings', function(data) {
+                    console.log(data);
+                    console.log('response received on frontend');
+                    console.log(data[0]);
+                    var thehtml = '<strong>Item: </strong>' + data.item_name + '<br>';
+                    thehtml += '<strong>Brand: </strong>' + data.brand_name + '<br>';
+                    thehtml += '<strong>Calories: </strong>' + data.nf_calories + '<br>';
+                    $('#outputcontent').html(thehtml);
+                });
+                //var thehtml = '<strong>Item Name:</strong> ' + suggestion.value;// + ' <br> <strong>Symbol:</strong> ' + suggestion.data;
+                //$('#outputcontent').html(thehtml);
             }
         });
         /*
@@ -48,8 +58,10 @@ window.onload = function() {
         console.log(data);
         console.log('searchResults received');
         var thehtml = '<strong>Item Name:</strong> ' + data;// + ' <br> <strong>Symbol:</strong> ' + suggestion.data;
-        $('#outputcontent').html(thehtml);
+        //$('#outputcontent').html(thehtml);
     });
+
+
 
     /*
     Activating autoselect query when user types more than 3 characters
@@ -64,7 +76,7 @@ window.onload = function() {
             var text = autocomplete.value;
             if (!(text in searchDict)) {
                 searchDict[text] = text;
-                socket.emit('test', {q: text});
+                socket.emit('suggestion', {q: text});
                 searched = true;
             }
         }
@@ -73,21 +85,20 @@ window.onload = function() {
             var text = autocomplete.value;
             if (!(text in searchDict)) {
                 searchDict[text] = text;
-                socket.emit('test', {q: text});
+                socket.emit('suggestion', {q: text});
                 searched = false;
             }
         }
 
         if (autocomplete.value.length == 0){
             searched = false;
-            resultList = [];
         }
 
         if (window.event.keyCode == '13') {
             var text = autocomplete.value;
             if (!(text in searchDict)) {
                 searchDict[text] = text;
-                socket.emit('test', {q: text});
+                socket.emit('suggestion', {q: text});
                 searched = false;
             }
         }

@@ -18,6 +18,8 @@
     "monk": "latest",
     "morgan": "~1.5.3",
     "nutritionix": "latest",
+    "request": "^2.58.0",
+    "requestify": "^0.1.17",
     "serve-favicon": "~2.2.1",
     "socket.io": "latest",
     "underscore": "latest"
