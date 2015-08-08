@@ -1,5 +1,5 @@
 window.onload = function() {
-    var socket = io.connect('http://localhost:3700');
+    var socket = io.connect('http://localhost:3700' || 'http://sleepy-wave-5746.herokuapp.com:3700');
 
     var search = document.getElementById('search');
     var content = document.getElementById('itemlist');
