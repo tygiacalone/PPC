@@ -1,6 +1,5 @@
-var socket = io.connect('http://172.91.76.57:3700');
-
 window.onload = function() {
+    var socket = io.connect('http://localhost:3700');
 
     var search = document.getElementById('search');
     var content = document.getElementById('itemlist');
@@ -37,6 +36,8 @@ window.onload = function() {
                     var thehtml = '<strong>Item: </strong>' + data.item_name + '<br>';
                     thehtml += '<strong>Brand: </strong>' + data.brand_name + '<br>';
                     thehtml += '<strong>Calories: </strong>' + data.nf_calories + '<br>';
+                    thehtml += '<strong>Protein: </strong>' + data.nf_protein + '<br>';
+                    thehtml += '<strong>Protein / Calorie: </strong>' + 10 * (data.nf_protein / data.nf_calories) + '<br>';
                     $('#outputcontent').html(thehtml);
                 });
                 //var thehtml = '<strong>Item Name:</strong> ' + suggestion.value;// + ' <br> <strong>Symbol:</strong> ' + suggestion.data;

@@ -12,6 +12,7 @@
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
     "express": "~4.12.4",
+    "ip": "^0.3.3",
     "jade": "~1.9.2",
     "lodash": "latest",
     "mongodb": "latest",
@@ -20,6 +21,7 @@
     "nutritionix": "latest",
     "request": "^2.58.0",
     "requestify": "^0.1.17",
+    "requirejs": "^2.1.20",
     "serve-favicon": "~2.2.1",
     "socket.io": "latest",
     "underscore": "latest"
