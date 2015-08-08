@@ -26,7 +26,10 @@ console.log('Listening on port 3000! \n');
 //app.set('port', process.env.PORT || 3700);
 
 // Set up socket.io
-var io = require('socket.io').listen(3700);
+var io = require('socket.io')({
+    'transports': ['xhr-polling'],
+    'polling duration': 10
+}).listen(3700);
 
 io.sockets.on('query', function (data){
     console.log('Just received query: ');
