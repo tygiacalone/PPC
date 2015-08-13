@@ -31,10 +31,14 @@ html(lang='en')
     link(rel='stylesheet', href='assets/plugins/prism/prism.css')
     |     
     link(rel='stylesheet', type='text/css', media='all', href='/stylesheets/search.css')
+    |     
+    link(rel='stylesheet', type='text/css', media='all', href='/stylesheets/nutritionLabel-min.css')
     // Theme CSS
     link#theme-style(rel='stylesheet', href='assets/css/styles.css')
     // Javascripts
     script(data-main='javascripts/search.js', src='javascripts/lib/require.js')
+    |     
+    script(src='/javascripts/socket.io.js')
     // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
     //
       if lt IE 9script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
@@ -98,33 +102,37 @@ html(lang='en')
           | Protein /
           span.highlight Calorie
         |         
-        p.intro
-          br
-        |         
-        #searchfield
-          form(onsubmit='return false;')
-            input#autocomplete.biginput(type='text', name='currency')
-        // @end #searchfield
-        #outputbox
-          p#outputcontent Choose a currency and the results will display here.
-        |         
-        ul.meta.list-inline
-          li
-            a(href='#', target='_blank') View on GitHub
-          |             
-          li
-            a(href='https://github.com/twbs/bootstrap', target='_blank') Full Documentation
-          |             
-          li
-            | Created by 
-            a(href='http://ty.giacalone.me/', target='_blank') Ty Giacalone
-          |             
-          li
-            | Powered by 
-            a(href='http://www.nutritionix.com/api', target='_blank') Nutritionix
-            |                 &amp; 
-            a(href='http://www.nutritionix.com/api', target='_blank') USDA API
-        // //meta
+        #example  
+        |             
+        .naTooltip Data not available
+      |         
+      p.intro
+        br
+      |         
+      #searchfield
+        form(onsubmit='return false;')
+          input#autocomplete.biginput(type='text', name='currency')
+      // @end #searchfield
+      #outputbox
+        p#outputcontent Choose a currency and the results will display here.
+      |         
+      ul.meta.list-inline
+        li
+          a(href='#', target='_blank') View on GitHub
+        |             
+        li
+          a(href='https://github.com/twbs/bootstrap', target='_blank') Full Documentation
+        |             
+        li
+          | Created by 
+          a(href='http://ty.giacalone.me/', target='_blank') Ty Giacalone
+        |             
+        li
+          | Powered by 
+          a(href='http://www.nutritionix.com/api', target='_blank') Nutritionix
+          |                 &amp; 
+          a(href='http://www.nutritionix.com/api', target='_blank') USDA API
+      // //meta
       // //container
       .social-media
         .social-media-inner.container.text-center
@@ -166,7 +174,7 @@ html(lang='en')
             |                 
             li.github-fork
               iframe(src='http://ghbtns.com/github-btn.html?user=mdo&repo=github-buttons&type=fork', allowtransparency='true', frameborder='0', scrolling='0', width='53', height='20')
-    script(src='/javascripts/socket.io.js')
-    script(src='/javascripts/search.js')
     script(type='text/javascript', src='/javascripts/jquery-1.9.1.min.js')
     script(type='text/javascript', src='/javascripts/jquery.autocomplete.min.js')
+    script(data-main='javascripts/search.js', src='javascripts/lib/nutritionLabel-min.js')
+    script(src='/javascripts/search.js')

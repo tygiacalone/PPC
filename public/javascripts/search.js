@@ -1,5 +1,5 @@
 window.onload = function() {
-    var socket = io.connect('http://localhost:3700' || 'https://proteinpercalorie.herokuapp.com:3700');
+    var socket = io.connect(window.location.hostname + ':3700');
 
     var search = document.getElementById('search');
     var content = document.getElementById('itemlist');
@@ -7,6 +7,8 @@ window.onload = function() {
     var searchDict = [];
     var resultDict = [];
     var resultList = [];
+
+    $('#example').nutritionLabel();
 
     socket.on('results', function (data) {
         console.log(data);

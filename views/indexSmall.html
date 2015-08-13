@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="assets/plugins/prism/prism.css">
     <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/search.css">
+    <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/nutritionLabel-min.css">
     <!-- Theme CSS-->
     <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
     <!-- Javascripts -->
@@ -64,7 +65,9 @@ script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
 <!-- //header--><!-- ******PROMO******-->
 <section id="promo" class="promo section offset-header">
     <div class="container text-center"><h2 class="title">Protein /<span class="highlight">Calorie</span></h2>
-
+        <div id="example"> </div>
+            <div class="naTooltip">Data not available</div>
+        </div>
         <p class="intro"><br></p>
 
         <div id="searchfield">
@@ -127,8 +130,9 @@ script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
         </div>
     </div>
 </section>
-<script src="/javascripts/search.js"></script>
 <script type="text/javascript" src="/javascripts/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/javascripts/jquery.autocomplete.min.js"></script>
+<script data-main="javascripts/search.js" src="javascripts/lib/nutritionLabel-min.js"></script>
+<script src="/javascripts/search.js"></script>
 </body>
 </html>
