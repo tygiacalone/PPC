@@ -38,7 +38,7 @@ window.onload = function() {
                     var thehtml = '<strong>Item: </strong>' + data.item_name + '<br>';
                     thehtml += '<strong>Brand: </strong>' + data.brand_name + '<br>';
                     thehtml += '<strong>Calories: </strong>' + data.nf_calories + '<br>';
-                    thehtml += '<strong>Protein: </strong>' + data.nf_protein + '<br>';
+                    thehtml += '<strong>Protein: </strong>' + data.nf_protein + 'g' + '<br>';
                     thehtml += '<strong>Protein / Calorie: </strong>' + 10 * (data.nf_protein / data.nf_calories) + '<br>';
                     $('#outputcontent').html(thehtml);
                 });
