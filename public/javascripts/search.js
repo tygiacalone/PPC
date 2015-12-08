@@ -30,18 +30,6 @@ window.onload = function() {
             onSelect: function (suggestion) {
                 console.log(resultList);
                 socket.emit('search', suggestion.value);
-
-                socket.on('testings', function(data) {
-                    console.log(data);
-                    console.log('response received on frontend');
-                    console.log(data[0]);
-                    var thehtml = '<strong>Item: </strong>' + data.item_name + '<br>';
-                    thehtml += '<strong>Brand: </strong>' + data.brand_name + '<br>';
-                    thehtml += '<strong>Calories: </strong>' + data.nf_calories + '<br>';
-                    thehtml += '<strong>Protein: </strong>' + data.nf_protein + 'g' + '<br>';
-                    thehtml += '<strong>Protein / Calorie: </strong>' + 10 * (data.nf_protein / data.nf_calories) + '<br>';
-                    $('#outputcontent').html(thehtml);
-                });
                 //var thehtml = '<strong>Item Name:</strong> ' + suggestion.value;// + ' <br> <strong>Symbol:</strong> ' + suggestion.data;
                 //$('#outputcontent').html(thehtml);
             }
@@ -57,14 +45,24 @@ window.onload = function() {
         */
     });
 
+    socket.on('populate', function(data) {
+        console.log(data);
+        console.log('response received on frontend');
+        console.log(data[0]);
+        var thehtml = '<strong>Item: </strong>' + data.item_name + '<br>';
+        thehtml += '<strong>Brand: </strong>' + data.brand_name + '<br>';
+        thehtml += '<strong>Calories: </strong>' + data.nf_calories + '<br>';
+        thehtml += '<strong>Protein: </strong>' + data.nf_protein + 'g' + '<br>';
+        thehtml += '<strong>Protein / Calorie: </strong>' + 10 * (data.nf_protein / data.nf_calories) + '<br>';
+        $('#outputcontent').html(thehtml);
+    });
+
     socket.on('searchResults', function(data) {
         console.log(data);
         console.log('searchResults received');
         var thehtml = '<strong>Item Name:</strong> ' + data;// + ' <br> <strong>Symbol:</strong> ' + suggestion.data;
         //$('#outputcontent').html(thehtml);
     });
-
-
 
     /*
     Activating autoselect query when user types more than 3 characters
@@ -101,7 +99,7 @@ window.onload = function() {
             var text = autocomplete.value;
             if (!(text in searchDict)) {
                 searchDict[text] = text;
-                socket.emit('suggestion', {q: text});
+                socket.emit('search', text);
                 searched = false;
             }
         }
